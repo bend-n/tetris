@@ -10,30 +10,32 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
-"class": "Arg",
+"class": "Logic",
 "language": "GDScript",
-"path": "res://addons/gdcli/Arg.gd"
+"path": "res://Logic.gd"
 }, {
-"base": "Reference",
-"class": "Parser",
+"base": "AspectRatioContainer",
+"class": "Tetris",
 "language": "GDScript",
-"path": "res://addons/gdcli/Parser.gd"
+"path": "res://Tetris.gd"
+}, {
+"base": "Resource",
+"class": "TetrisPiece",
+"language": "GDScript",
+"path": "res://TetrisPiece.gd"
 } ]
 _global_script_class_icons={
-"Arg": "",
-"Parser": ""
+"Logic": "",
+"Tetris": "",
+"TetrisPiece": ""
 }
 
 [application]
 
-config/name="Godot Template"
+config/name="tetris"
 run/main_scene="res://Main.tscn"
 config/use_custom_user_dir=true
-config/custom_user_dir_name="GodotTemplate"
-
-[autoload]
-
-CLI="*res://autoloads/CLI.gd"
+config/custom_user_dir_name="tetris"
 
 [debug]
 
@@ -41,13 +43,13 @@ gdscript/warnings/return_value_discarded=false
 
 [display]
 
-window/size/width=320
-window/size/height=180
-window/size/test_width=1280
-window/size/test_height=720
+window/size/width=180
+window/size/height=320
+window/size/test_width=720
+window/size/test_height=1280
 window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
-window/stretch/aspect="keep"
+window/stretch/aspect="expand"
 
 [logging]
 
@@ -61,3 +63,4 @@ quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=0
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
+environment/default_clear_color=Color( 0.937255, 0.937255, 0.937255, 1 )
