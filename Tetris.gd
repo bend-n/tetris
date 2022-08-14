@@ -75,14 +75,14 @@ func draw_board(mat: Array = matrix.duplicate(true), shape: TetrisPiece = curren
 			get_square(Vector2(x, y)).color = colors[mat[y][x] - 1] if mat[y][x] > 0 else Color.transparent
 
 
-func _process(_delta):
-	if Input.is_action_just_pressed("ui_left"):
+func _input(event):
+	if event.is_action_pressed("ui_left", true):
 		current_shape.move(Vector2(-1, 0), matrix)
-	elif Input.is_action_just_pressed("ui_right"):
+	elif event.is_action_pressed("ui_right", true):
 		current_shape.move(Vector2(1, 0), matrix)
-	if Input.is_action_just_pressed("ui_up"):
+	if event.is_action_pressed("ui_up"):
 		current_shape.rotate(matrix, true)
-	if Input.is_action_just_pressed("ui_down"):
+	if event.is_action_pressed("ui_down"):
 		while current_shape.move(Vector2(0, 1), matrix):
 			continue
 		tick(false)
