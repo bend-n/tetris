@@ -72,7 +72,11 @@ func draw_board(mat: Array = matrix.duplicate(true), shape: TetrisPiece = curren
 	shape.embed(mat)
 	for y in range(ROWS):
 		for x in range(COLUMNS):
-			get_square(Vector2(x, y)).color = colors[mat[y][x] - 1] if mat[y][x] > 0 else Color.transparent
+			get_square(Vector2(x, y)).color = (
+				colors[mat[y][x] - 1]
+				if mat[y][x] > 0
+				else Color.transparent
+			)
 
 
 func _input(event):
@@ -96,6 +100,8 @@ func tick(create_timer := true):
 		t.connect("timeout", self, "tick")
 
 	if not current_shape.move(Vector2(0, 1), matrix):  # invalid move: cant go down
+		if current_shape.position.y == 0:
+			get_tree().reload_current_scene()
 		current_shape.embed(matrix)
 		current_shape = TetrisPiece.new(Vector2(randi() % (COLUMNS - 4), 0))
 		Logic.clear_lines(matrix)
