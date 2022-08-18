@@ -48,6 +48,7 @@ config/name="tetris"
 run/main_scene="res://Main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="tetris"
+run/low_processor_mode=true
 config/icon="res://icon.png"
 
 [debug]

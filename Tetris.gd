@@ -5,6 +5,7 @@ const ROWS = 20
 const COLUMNS = 10
 
 export(PoolColorArray) var colors
+export(PoolColorArray) var transcolors
 export(Color) var grid_color
 export(Color) var bg_color
 
@@ -62,6 +63,7 @@ func _ready() -> void:
 	add_child(c)
 	set_process(false)
 	assert(len(colors) == Logic.shapes.size())  # 7
+	assert(len(transcolors) == Logic.shapes.size())
 	ratio = float(COLUMNS) / float(ROWS)
 	init_squares()
 	start()
@@ -74,15 +76,29 @@ func start() -> void:
 	tick()
 
 
-func draw_board(mat: Array = matrix.duplicate(true), shape: TetrisPiece = current_shape) -> void:
-	shape.embed(mat)
+func draw_board() -> void:
+	var mat := matrix.duplicate(true)
+	current_shape.embed(mat)
+	var set_squares = draw_preview()
 	for y in range(ROWS):
 		for x in range(COLUMNS):
-			get_square(Vector2(x, y)).color = (
-				colors[mat[y][x] - 1]
-				if mat[y][x] > 0
-				else Color.transparent
-			)
+			if mat[y][x] > 0:
+				get_square(Vector2(x, y)).color = colors[mat[y][x] - 1]
+			elif set_squares.find(Vector2(x, y)) == -1:
+				get_square(Vector2(x, y)).color = Color.transparent
+
+
+func draw_preview(shape: TetrisPiece = current_shape) -> PoolVector2Array:
+	var p = shape.position
+	shape.fall(matrix)
+	var set_squares: PoolVector2Array = []
+	for y in range(4):
+		for x in range(4):
+			if Logic.get_index_or_null(shape.shape, y, x) > 0:
+				set_squares.append(Vector2(x, y) + shape.position)
+				get_square(Vector2(x, y) + shape.position).color = transcolors[shape.shape_type]
+	shape.position = p
+	return set_squares
 
 
 func _input(event):
