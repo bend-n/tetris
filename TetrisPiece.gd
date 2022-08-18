@@ -72,3 +72,8 @@ func rotate(matrix: Array, cw := true):
 		shape = s
 		return false
 	return true
+
+
+func fall(matrix: Array) -> void:
+	while move(Vector2.DOWN, matrix):
+		continue

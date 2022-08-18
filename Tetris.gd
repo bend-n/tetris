@@ -80,15 +80,27 @@ func draw_board(mat: Array = matrix.duplicate(true), shape: TetrisPiece = curren
 
 
 func _input(event):
+	if event is InputEventSwipe:
+		match event.direction.round().normalized():
+			Vector2.RIGHT:
+				current_shape.move(Vector2.RIGHT, matrix)
+			Vector2.LEFT:
+				current_shape.move(Vector2.LEFT, matrix)
+			Vector2.DOWN:
+				current_shape.fall(matrix)
+				tick(false)
+			_:
+				current_shape.rotate(matrix)
+				tick(false)
+
 	if event.is_action_pressed("ui_left", true):
-		current_shape.move(Vector2(-1, 0), matrix)
+		current_shape.move(Vector2.LEFT, matrix)
 	elif event.is_action_pressed("ui_right", true):
-		current_shape.move(Vector2(1, 0), matrix)
+		current_shape.move(Vector2.RIGHT, matrix)
 	if event.is_action_pressed("ui_up"):
 		current_shape.rotate(matrix, true)
 	if event.is_action_pressed("ui_down"):
-		while current_shape.move(Vector2(0, 1), matrix):
-			continue
+		current_shape.fall(matrix)
 		tick(false)
 	else:
 		draw_board()
