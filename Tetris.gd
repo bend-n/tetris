@@ -5,6 +5,8 @@ const ROWS = 20
 const COLUMNS = 10
 
 export(PoolColorArray) var colors
+export(Color) var grid_color
+export(Color) var bg_color
 
 var current_shape: TetrisPiece
 var matrix := Logic.create_matrix(ROWS, COLUMNS)
@@ -25,7 +27,7 @@ func init_squares():
 		var bg_square := ReferenceRect.new()
 		bg_square.editor_only = false
 		bg_square.border_width = 1.5
-		bg_square.border_color = Color.ghostwhite
+		bg_square.border_color = grid_color
 		bg_square.name = "%d" % _i
 		expand_control(bg_square)
 		bg.add_child(bg_square)
@@ -54,6 +56,10 @@ func expand_control(c: Control) -> void:
 
 
 func _ready() -> void:
+	var c = ColorRect.new()
+	expand_control(c)
+	c.color = bg_color
+	add_child(c)
 	set_process(false)
 	assert(len(colors) == Logic.shapes.size())  # 7
 	ratio = float(COLUMNS) / float(ROWS)
