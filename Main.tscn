@@ -25,4 +25,4 @@ bg_color = Color( 0.992157, 0.964706, 0.890196, 1 )
 [node name="SwipeDetector" type="Node" parent="."]
 script = ExtResource( 2 )
 swipe_timeout = 0.3
-min_swipe_distance = 50.0
+min_swipe_distance = 10.0
