@@ -4,6 +4,7 @@ class_name TetrisPiece
 var shape_type: int
 var shape := []
 var position: Vector2
+var stopped := false
 
 
 func _init(pos: Vector2) -> void:

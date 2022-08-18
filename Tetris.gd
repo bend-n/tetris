@@ -120,10 +120,13 @@ func tick(create_timer := true):
 	if not current_shape.move(Vector2(0, 1), matrix):  # invalid move: cant go down
 		if current_shape.position.y == 0:
 			get_tree().reload_current_scene()
-		current_shape.embed(matrix)
-		current_shape = TetrisPiece.new(Vector2(randi() % (COLUMNS - 4), 0))
-		Logic.clear_lines(matrix)
-		print(ascii(matrix))
+		if current_shape.stopped:
+			print(ascii(matrix))
+			current_shape.embed(matrix)
+			current_shape = TetrisPiece.new(Vector2(randi() % (COLUMNS - 4), 0))
+			Logic.clear_lines(matrix)
+		else:
+			current_shape.stopped = true
 	draw_board()
 
 
