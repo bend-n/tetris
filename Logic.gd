@@ -1,23 +1,23 @@
 extends Reference
 class_name Logic
 
-const shapes = [
-    [ 0, 0, 0, 0,
-      1, 1, 1, 1],
-    [ 0, 0, 0, 0,
-      1, 1, 1, 0,
-      1 ],
-    [ 1, 1, 1, 0,
-      0, 0, 1 ],
-    [ 0, 1, 1, 0,
-      0, 1, 1 ],
-    [ 1, 1, 0, 0,
-      0, 1, 1 ],
-    [ 0, 1, 1, 0,
-      1, 1 ],
-    [ 0, 1, 0, 0,
-      1, 1, 1 ]
-];
+const i := [ 0, 0, 0, 0,
+             1, 1, 1, 1 ]
+const j := [ 0, 1, 1, 1,
+			 0, 0, 0, 1 ]
+const l := [ 1, 1, 1, 0,
+             1 ]
+const o := [ 0, 1, 1, 0,
+             0, 1, 1 ]
+const s := [ 0, 1, 1, 0,
+             1, 1 ]
+const t := [ 0, 1, 0, 0,
+             1, 1, 1 ]
+const z := [ 1, 1, 0, 0,
+             0, 1, 1 ]
+
+const piece_bag := [i, i, i, i, j, j, j, j, l, l, l, l, o, o, o, o, s, s, s, s, t, t, t, t, z, z, z, z]
+const piece_indexs := {i: 0, j: 1, l: 2, o: 3, s: 4, t: 5, z: 6}
 
 
 static func create_matrix(rows: int, columns: int) -> Array:

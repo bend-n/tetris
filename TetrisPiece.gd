@@ -2,17 +2,16 @@ extends Resource
 class_name TetrisPiece
 
 var shape_type: int
-var shape := []
+var shape: Array
 var position: Vector2
 var stopped := false
 
 
-func _init(pos: Vector2) -> void:
+func _init(pos: Vector2, _s: Array) -> void:
 	position = pos
-	randomize()
-	shape_type = randi() % len(Logic.shapes)
-	var s: PoolIntArray = [0, 0, 0, 0]
-	s.append_array(Logic.shapes[shape_type])
+	shape_type = Logic.piece_indexs[_s]
+	var s := [0, 0, 0, 0]
+	s.append_array(_s)
 
 	for y in range(4):
 		shape.append([])

@@ -14,6 +14,15 @@ var matrix := Logic.create_matrix(ROWS, COLUMNS)
 var bg_squares := []
 var squares := []
 
+var bag = []
+
+
+func random_shape() -> Array:
+	if bag.empty():
+		bag = Logic.piece_bag.duplicate(true)
+	randomize()
+	return bag.pop_at(randi() % len(bag))
+
 
 func get_square(at: Vector2) -> Control:
 	return squares[at.y * COLUMNS + at.x]
@@ -62,8 +71,8 @@ func _ready() -> void:
 	c.color = bg_color
 	add_child(c)
 	set_process(false)
-	assert(len(colors) == Logic.shapes.size())  # 7
-	assert(len(transcolors) == Logic.shapes.size())
+	assert(len(colors) == 7)
+	assert(len(transcolors) == 7)
 	ratio = float(COLUMNS) / float(ROWS)
 	init_squares()
 	start()
@@ -72,7 +81,7 @@ func _ready() -> void:
 func start() -> void:
 	set_process(true)
 	# warning-ignore-all:integer_division
-	current_shape = TetrisPiece.new(Vector2((COLUMNS / 2) - 2, 0))
+	current_shape = TetrisPiece.new(Vector2((COLUMNS / 2) - 2, 0), random_shape())
 	tick()
 
 
@@ -139,7 +148,7 @@ func tick(create_timer := true):
 		if current_shape.stopped:
 			print(ascii(matrix))
 			current_shape.embed(matrix)
-			current_shape = TetrisPiece.new(Vector2(randi() % (COLUMNS - 4), 0))
+			current_shape = TetrisPiece.new(Vector2(randi() % (COLUMNS - 4), 0), random_shape())
 			Logic.clear_lines(matrix)
 		else:
 			current_shape.stopped = true
