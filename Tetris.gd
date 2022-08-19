@@ -1,5 +1,6 @@
+tool
 class_name Tetris
-extends AspectRatioContainer
+extends MarginContainer
 
 const ROWS = 20
 const COLUMNS = 10
@@ -13,49 +14,77 @@ var current_shape: TetrisPiece
 var matrix := Logic.create_matrix(ROWS, COLUMNS)
 var bg_squares := []
 var squares := []
+var nxt_p_squares := []
 
-var bag = []
+var bag := Logic.piece_bag.duplicate(true)
+onready var next_shape: Array = bag.pop_at(randi() % len(bag))
 
 
 func random_shape() -> Array:
+	var n = next_shape
+	next_shape = bag.pop_at(randi() % len(bag))
 	if bag.empty():
 		bag = Logic.piece_bag.duplicate(true)
-	randomize()
-	return bag.pop_at(randi() % len(bag))
+	draw_nxt_p_shape()
+	return n
+
+
+func draw_nxt_p_shape():
+	var clr = colors[Logic.piece_indexs[next_shape]]
+	var n = [0, 0, 0, 0]
+	n.append_array(next_shape.duplicate())
+	for i in range(4 * 4):
+		nxt_p_squares[i].color = Color.transparent
+		if i > len(n) - 1 or n[i] == 0:
+			continue
+		nxt_p_squares[i].color = clr
 
 
 func get_square(at: Vector2) -> Control:
 	return squares[at.y * COLUMNS + at.x]
 
 
-func init_squares():
-	var bg := create_grid_container("background")
-	add_child(bg)
-	var fg := create_grid_container("foreground")
-	add_child(fg)
+func init_squares(on: Control):
+	var aspect = AspectRatioContainer.new()
+	aspect.alignment_vertical = aspect.ALIGN_BEGIN
+	aspect.ratio = float(COLUMNS) / float(ROWS)
+	aspect.name = "aspect"
+	expand_control(aspect)
+	on.add_child(aspect)
+	var sqs := create_grid_container("squares")
+	aspect.add_child(sqs)
+	print_tree_pretty()
 	for _i in range(ROWS * COLUMNS):
+		squares.append(create_square(sqs, "%d" % _i))
+
+
+func create_square(to: GridContainer, name: String, bg := true) -> ColorRect:
+	var fg_square := ColorRect.new()
+	fg_square.color = Color.transparent
+	fg_square.name = name
+	fg_square.rect_min_size = Vector2(10, 10)
+	expand_control(fg_square)
+	to.add_child(fg_square)
+	if bg:
 		var bg_square := ReferenceRect.new()
 		bg_square.editor_only = false
 		bg_square.border_width = 1.5
 		bg_square.border_color = grid_color
-		bg_square.name = "%d" % _i
+		bg_square.name = name
+		bg_square.show_behind_parent = true
 		expand_control(bg_square)
-		bg.add_child(bg_square)
-		var fg_square = ColorRect.new()
-		fg_square.color = Color.transparent
-		fg_square.name = "%d" % _i
-		expand_control(fg_square)
-		fg.add_child(fg_square)
-		squares.append(fg_square)
+		fg_square.add_child(bg_square)
+	return fg_square
 
 
-func create_grid_container(name: String) -> GridContainer:
+func create_grid_container(name: String, cols := COLUMNS, expand := true) -> GridContainer:
 	var g := GridContainer.new()
-	g.columns = COLUMNS
+	g.columns = cols
 	g.name = name
-	g.add_constant_override("hseparation", 0)
 	g.add_constant_override("vseparation", 0)
-	g.set_anchors_and_margins_preset(PRESET_WIDE)
+	g.add_constant_override("hseparation", 0)
+	if expand:
+		expand_control(g)
 	return g
 
 
@@ -65,17 +94,45 @@ func expand_control(c: Control) -> void:
 	c.set_anchors_and_margins_preset(PRESET_WIDE)
 
 
-func _ready() -> void:
-	var c = ColorRect.new()
+func init_bg() -> void:
+	var c := ColorRect.new()
+	c.name = "bg"
 	expand_control(c)
 	c.color = bg_color
 	add_child(c)
+
+
+func init_next_preview(on: Control):
+	var aspect := AspectRatioContainer.new()
+	aspect.alignment_vertical = aspect.ALIGN_BEGIN
+	aspect.name = "aspect"
+	aspect.set_anchors_and_margins_preset(PRESET_WIDE)
+	on.add_child(aspect)
+	var next = create_grid_container("next-block-preview", 4, false)
+	aspect.add_child(next)
+	for _i in range(4 * 4):
+		nxt_p_squares.append(create_square(next, "%d" % _i, false))
+
+	var square = ReferenceRect.new()
+	square.name = "next-block-outline"
+	square.border_width = 1.5
+	square.border_color = grid_color
+	square.editor_only = false
+	expand_control(square)
+	aspect.add_child(square)
+
+
+func _ready() -> void:
 	set_process(false)
-	assert(len(colors) == 7)
-	assert(len(transcolors) == 7)
-	ratio = float(COLUMNS) / float(ROWS)
-	init_squares()
-	start()
+	init_bg()
+	var h = HBoxContainer.new()
+	h.add_constant_override("hseparation", 5)
+	h.name = "hbox"
+	add_child(h)
+	init_squares(h)
+	init_next_preview(h)
+	if not Engine.editor_hint:
+		start()
 
 
 func start() -> void:

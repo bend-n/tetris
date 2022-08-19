@@ -3,20 +3,18 @@
 [ext_resource path="res://Tetris.gd" type="Script" id=1]
 [ext_resource path="res://addons/swipe-detector/SwipeDetector.gd" type="Script" id=2]
 
-[node name="Main" type="MarginContainer"]
+[node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-custom_constants/margin_right = 10
-custom_constants/margin_top = 10
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 10
 
-[node name="Tetris" type="AspectRatioContainer" parent="."]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 170.0
-margin_bottom = 310.0
+[node name="Tetris" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
 script = ExtResource( 1 )
 colors = PoolColorArray( 0.862745, 0.196078, 0.184314, 1, 0.521569, 0.6, 0, 1, 0.14902, 0.545098, 0.823529, 1, 0.423529, 0.443137, 0.768627, 1, 0.709804, 0.537255, 0, 1, 0.576471, 0.631373, 0.631373, 1, 0.164706, 0.631373, 0.596078, 1 )
 transcolors = PoolColorArray( 0.780392, 0.172549, 0.164706, 0.670588, 0.521569, 0.6, 0, 0.619608, 0.160784, 0.584314, 0.890196, 0.564706, 0.521569, 0.545098, 0.94902, 0.784314, 0.788235, 0.592157, 0, 0.67451, 0.690196, 0.760784, 0.760784, 0.627451, 0.14902, 0.580392, 0.545098, 0.701961 )
@@ -25,5 +23,4 @@ bg_color = Color( 0.992157, 0.964706, 0.890196, 1 )
 
 [node name="SwipeDetector" type="Node" parent="."]
 script = ExtResource( 2 )
-swipe_timeout = 0.3
 min_swipe_distance = 10.0
