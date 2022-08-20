@@ -9,15 +9,50 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "HBoxContainer",
+"class": "ActionIcons",
+"language": "GDScript",
+"path": "res://addons/remap/ActionIcons.gd"
+}, {
+"base": "HBoxContainer",
+"class": "ActionLabel",
+"language": "GDScript",
+"path": "res://addons/remap/ActionLabel.gd"
+}, {
+"base": "Reference",
+"class": "IconMap",
+"language": "GDScript",
+"path": "res://addons/remap/IconMap.gd"
+}, {
 "base": "InputEventAction",
 "class": "InputEventSwipe",
 "language": "GDScript",
 "path": "res://addons/swipe-detector/InputEventSwipe.gd"
 }, {
+"base": "Node",
+"class": "KeySelector",
+"language": "GDScript",
+"path": "res://addons/remap/KeySelector.gd"
+}, {
 "base": "Reference",
 "class": "Logic",
 "language": "GDScript",
 "path": "res://Logic.gd"
+}, {
+"base": "HBoxContainer",
+"class": "RemapButton",
+"language": "GDScript",
+"path": "res://addons/remap/RemapButton.gd"
+}, {
+"base": "Reference",
+"class": "RemapUtilities",
+"language": "GDScript",
+"path": "res://addons/remap/RemapUtilities.gd"
+}, {
+"base": "Node",
+"class": "SaveLoadUtils",
+"language": "GDScript",
+"path": "res://addons/remap/SaveLoadUtils.gd"
 }, {
 "base": "Node",
 "class": "SwipeDetector",
@@ -35,8 +70,15 @@ _global_script_classes=[ {
 "path": "res://TetrisPiece.gd"
 } ]
 _global_script_class_icons={
+"ActionIcons": "",
+"ActionLabel": "",
+"IconMap": "",
 "InputEventSwipe": "",
+"KeySelector": "",
 "Logic": "",
+"RemapButton": "",
+"RemapUtilities": "",
+"SaveLoadUtils": "",
 "SwipeDetector": "",
 "Tetris": "",
 "TetrisPiece": ""
@@ -70,6 +112,35 @@ window/stretch/aspect="expand"
 unused={
 "deadzone": 0.5,
 "events": [  ]
+}
+left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+rotate_cw={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+rotate_anti_cw={
+"deadzone": 0.5,
+"events": [  ]
+}
+pause={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
 }
 
 [logging]

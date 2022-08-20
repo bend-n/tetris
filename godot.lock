@@ -2,5 +2,9 @@
 	"@bendn/swipe-detector": {
 		"version": "1.1.5",
 		"integrity": "sha512-td5Qr4yiJYE01inyYkxqak6V+Fdy+qm9jgwKMqWvXAbborfbrMJ0c5TXy9OJ0rrmF4Erl7eUYnTJEJan1T0NYA=="
+	},
+	"@bendn/remap": {
+		"version": "1.2.2",
+		"integrity": "sha512-3XCE5CsFahUPPMl9acDKFlObW+kD+NlWmt4EJl4YrhZtfzX5069jVLnbSUF0Ac3CgUep0+I1x36jpnNpoVdHkQ=="
 	}
 }

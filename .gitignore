@@ -6,5 +6,5 @@ logs/
 .vscode/
 exports/
 *.x86_64
-addons/swipe-detector
+addons/
 .github/icon.svg

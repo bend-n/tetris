@@ -53,7 +53,6 @@ func init_squares(on: Control):
 	on.add_child(aspect)
 	var sqs := create_grid_container("squares")
 	aspect.add_child(sqs)
-	print_tree_pretty()
 	for _i in range(ROWS * COLUMNS):
 		squares.append(create_square(sqs, "%d" % _i))
 
@@ -181,12 +180,14 @@ func _input(event):
 				current_shape.rotate(matrix)
 				tick(false)
 
-	if event.is_action_pressed("ui_left", true):
+	if event.is_action_pressed("left", true):
 		current_shape.move(Vector2.LEFT, matrix)
-	elif event.is_action_pressed("ui_right", true):
+	elif event.is_action_pressed("right", true):
 		current_shape.move(Vector2.RIGHT, matrix)
-	if event.is_action_pressed("ui_up"):
+	if event.is_action_pressed("rotate_cw"):
 		current_shape.rotate(matrix, true)
+	elif event.is_action_pressed("rotate_anti_cw"):
+		current_shape.rotate(matrix, false)
 	if event.is_action_pressed("ui_down"):
 		current_shape.fall(matrix)
 		tick(false)
@@ -196,7 +197,7 @@ func _input(event):
 
 func tick(create_timer := true):
 	if create_timer:
-		var t := get_tree().create_timer(.25)
+		var t := get_tree().create_timer(.25, false)
 		t.connect("timeout", self, "tick")
 
 	if not current_shape.move(Vector2(0, 1), matrix):  # invalid move: cant go down

@@ -1,6 +1,7 @@
 {
     "name": "tetris",
     "packages": {
-        "@bendn/swipe-detector": "1.1.5"
+        "@bendn/swipe-detector": "1.1.5",
+        "@bendn/remap": "1.2.2"
     }
 }

@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/main.theme" type="Theme" id=1]
+[ext_resource path="res://settings/RemapHolder.gd" type="Script" id=2]
+[ext_resource path="res://assets/remap.theme" type="Theme" id=3]
+[ext_resource path="res://settings/Settings.gd" type="Script" id=4]
+
+[node name="Settings" type="ColorRect"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+color = Color( 0.345, 0.433167, 0.46, 0.392157 )
+script = ExtResource( 4 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="MC" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="P" type="PanelContainer" parent="MC"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 175.0
+margin_bottom = 238.0
+
+[node name="RemapHolder" type="VBoxContainer" parent="MC/P"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 165.0
+margin_bottom = 228.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 3 )
+script = ExtResource( 2 )
+
+[node name="h" type="HBoxContainer" parent="MC/P/RemapHolder"]
+margin_right = 160.0
+margin_bottom = 13.0
+
+[node name="BackButton" type="Button" parent="MC/P/RemapHolder/h"]
+margin_right = 30.0
+margin_bottom = 13.0
+rect_min_size = Vector2( 30, 13 )
+text = " back "
+
+[node name="Labeler" type="Label" parent="MC/P/RemapHolder/h"]
+margin_left = 34.0
+margin_right = 160.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 0.396078, 0.482353, 0.513726, 1 )
+text = "remap controls"
+align = 1
+
+[connection signal="pressed" from="MC/P/RemapHolder/h/BackButton" to="." method="unpause"]

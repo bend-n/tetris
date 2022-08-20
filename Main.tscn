@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Tetris.gd" type="Script" id=1]
 [ext_resource path="res://addons/swipe-detector/SwipeDetector.gd" type="Script" id=2]
+[ext_resource path="res://settings/Settings.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/main.theme" type="Theme" id=4]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+theme = ExtResource( 4 )
 
 [node name="Tetris" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -24,3 +27,6 @@ bg_color = Color( 0.992157, 0.964706, 0.890196, 1 )
 [node name="SwipeDetector" type="Node" parent="."]
 script = ExtResource( 2 )
 min_swipe_distance = 10.0
+
+[node name="Settings" parent="." instance=ExtResource( 3 )]
+visible = false
