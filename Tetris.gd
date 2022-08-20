@@ -166,6 +166,17 @@ func draw_preview(shape: TetrisPiece = current_shape) -> PoolVector2Array:
 	return set_squares
 
 
+func highlight_clearable_lines() -> void:
+	var mat := matrix.duplicate(true)
+	current_shape.embed(mat)
+	var lines = Logic.clear_lines(mat.duplicate(true))
+	for l in lines:
+		for x in range(COLUMNS):
+			var c = colors[mat[l][x] - 1]
+			c.v += .2
+			get_square(Vector2(x, l)).color = c
+
+
 func _input(event):
 	if event is InputEventSwipe:
 		match event.direction.round().normalized():
@@ -196,10 +207,8 @@ func _input(event):
 
 
 func tick(create_timer := true):
-	if create_timer:
-		var t := get_tree().create_timer(.25, false)
-		t.connect("timeout", self, "tick")
-
+	var no_draw := false
+	var t_length := .25
 	if not current_shape.move(Vector2(0, 1), matrix):  # invalid move: cant go down
 		if current_shape.position.y == 0:
 			get_tree().reload_current_scene()
@@ -210,7 +219,15 @@ func tick(create_timer := true):
 			Logic.clear_lines(matrix)
 		else:
 			current_shape.stopped = true
-	draw_board()
+			draw_board()
+			highlight_clearable_lines()
+			no_draw = true
+			t_length = .5
+	if create_timer:
+		var t := get_tree().create_timer(t_length, false)
+		t.connect("timeout", self, "tick")
+	if not no_draw:
+		draw_board()
 
 
 #warning-ignore:shadowed_variable

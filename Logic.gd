@@ -47,20 +47,18 @@ static func valid_move(matrix: Array, piece, offset := Vector2()) -> bool:
 	return true
 
 
-static func clear_lines(matrix: Array) -> void:
+static func clear_lines(matrix: Array) -> PoolIntArray:
+	var clearable_lines := PoolIntArray()
 	var y = len(matrix)
-	while y > 0:
+	while y > 0:  # go from the bottom up
 		y -= 1
-		if matrix[y].min() > 0:
-			for yy in range(y, 1, -1):
+		if matrix[y].min() > 0:  # if a line has no empty
+			for yy in range(y, 1, -1):  # move all lines dodwn
 				matrix[yy] = matrix[yy - 1]
-			y += 1
+			clearable_lines.append(y)
+			y += 1  # and go down one, to check the new thing
+	return clearable_lines
 
 
 static func get_index_or_null(arr: Array, y: int, x: int) -> int:
 	return arr[y][x] if y < len(arr) and x < len(arr[y]) else null
-
-
-static func print_matrix(mat: Array):
-	for i in mat:
-		print(i)
