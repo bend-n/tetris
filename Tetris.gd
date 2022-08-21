@@ -199,7 +199,7 @@ func _input(event):
 		current_shape.rotate(matrix, true)
 	elif event.is_action_pressed("rotate_anti_cw"):
 		current_shape.rotate(matrix, false)
-	if event.is_action_pressed("ui_down"):
+	if event.is_action_pressed("down"):
 		current_shape.fall(matrix)
 		tick(false)
 	else:
